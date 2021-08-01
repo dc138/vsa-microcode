@@ -1,8 +1,11 @@
 MicroCode
+=========
 
-This repo contaisn the C++ program used to generate the VSA (Very Simple Arhitecture) microcode.
+This repo contaisn the C++ program used to generate the VSA (Very Simple
+Arhitecture) microcode to be used by the processor control logic.
 
 List of all control signals:
+============================
 
   HLT Halt System Clock
 
@@ -29,6 +32,7 @@ List of all control signals:
 
 
 List of all instructions:
+=========================
 
   0 0000 HLT          Halt System Clock
   1 0001 LDA  <Addr>  Load from Adress into Accumulator
@@ -50,6 +54,7 @@ List of all instructions:
 
 
 Instruction Explanation:
+========================
 
   MicroCode  Instruction   Control
   Step       Register      Word
@@ -172,4 +177,23 @@ Instruction Explanation:
 
   0010       1111          ACO OTI PCI
   0011       1111          CLR
+
+LICENSE
+=======
+
+MicroCode generator for the Very Simple Architecture
+Copyright © 2021 Antonio de Haro
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
