@@ -4,49 +4,49 @@ This repo contains a c++ program to generate the microcode for the very simple a
 
 ## List of all control signals:
 
-  HLT Halt System Clock
+  * HLT Halt System Clock
 
-  ACI Accumulator In
-  ACO Accumulator Out
+  * ACI Accumulator In
+  * ACO Accumulator Out
 
-  ALS ALU Subtract
-  FRI Flags Register In
+  * ALS ALU Subtract
+  * FRI Flags Register In
 
-  OTI Output Register In
+  * OTI Output Register In
 
-  PCO Program Counter Out
-  PCI Program Counter Increment
-  PCJ Program Counter Branch
-  PCZ Program Counter Branch (if zero)
-  PCF Program Counter Branch (if overflow)
+  * PCO Program Counter Out
+  * PCI Program Counter Increment
+  * PCJ Program Counter Branch
+  * PCZ Program Counter Branch (if zero)
+  * PCF Program Counter Branch (if overflow)
 
-  MRI Memory Address Register In
-  RMI Random Acess Memory In
-  RMO Random Acess Memory Out
+  * MRI Memory Address Register In
+  * RMI Random Acess Memory In
+  * RMO Random Acess Memory Out
 
-  IRI Instruction Register In
-  CLR Control Logic Microstep reset
+  * IRI Instruction Register In
+  * CLR Control Logic Microstep reset
 
 
 ## List of all instructions:
 
-  0 0000 HLT          Halt System Clock
-  1 0001 LDA  <Addr>  Load from Adress into Accumulator
-  2 0010 STA  <Addr>  Store from Accumulator into Address
-  3 0011 ADA  <Addr>  Add to Accumulator from Address
-  4 0100 SBA  <Addr>  Subtract to Accumulator from Address
-  5 0101 JPO  <Addr>  Jump to Address if Overflow
-  6 0110 JPZ  <Addr>  Jump to Address if Zero
-  7 0111 OTA  <Addr>  Output Memory at Address
+  * 0 0000 HLT          Halt System Clock
+  * 1 0001 LDA  <Addr>  Load from Adress into Accumulator
+  * 2 0010 STA  <Addr>  Store from Accumulator into Address
+  * 3 0011 ADA  <Addr>  Add to Accumulator from Address
+  * 4 0100 SBA  <Addr>  Subtract to Accumulator from Address
+  * 5 0101 JPO  <Addr>  Jump to Address if Overflow
+  * 6 0110 JPZ  <Addr>  Jump to Address if Zero
+  * 7 0111 OTA  <Addr>  Output Memory at Address
 
-  8 1000 JMP  <Addr>  Jump to Address
-  9 1001 LDI  <Data>  Load from Imidiate into Accumulator
-  A 1010 NOP          No Operation
-  B 1011 ADI  <Data>  Add to Accumulator from Imidiate
-  C 1100 SBI  <Data>  Subtract to Accumulator from Imidiate
-  D 1101 JNO  <Addr>  Jump to Address if not Overflow
-  E 1110 JNZ  <Addr>  Jump to Address if not Zero
-  F 1111 OTC          Output Accumulator
+  * 8 1000 JMP  <Addr>  Jump to Address
+  * 9 1001 LDI  <Data>  Load from Imidiate into Accumulator
+  * A 1010 NOP          No Operation
+  * B 1011 ADI  <Data>  Add to Accumulator from Imidiate
+  * C 1100 SBI  <Data>  Subtract to Accumulator from Imidiate
+  * D 1101 JNO  <Addr>  Jump to Address if not Overflow
+  * E 1110 JNZ  <Addr>  Jump to Address if not Zero
+  * F 1111 OTC          Output Accumulator
 
 
 ## Instruction Explanation:
