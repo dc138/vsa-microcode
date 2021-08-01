@@ -54,8 +54,8 @@ This repo contains a c++ program to generate the microcode for the very simple a
   * MicroCode  Instruction   Control
   * Step       Register      Word
 
-  0000       XXXX          PCO MRI<br/>
-  0001       XXXX          RMO IRI<br/>
+    0000       XXXX          PCO MRI<br/>
+    0001       XXXX          RMO IRI<br/>
 
   * HLT Halt System Clock:
 
