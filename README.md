@@ -51,24 +51,24 @@ This repo contains a c++ program to generate the microcode for the very simple a
 
 ## Instruction Explanation:
 
-  MicroCode  Instruction   Control
-  Step       Register      Word
+  * MicroCode  Instruction   Control
+  * Step       Register      Word
 
-  0000       XXXX          PCO MRI
-  0001       XXXX          RMO IRI
+  0000       XXXX          PCO MRI<br/>
+  0001       XXXX          RMO IRI<br/>
 
-  HLT Halt System Clock:
+  * HLT Halt System Clock:
 
-  0010       0000          HLT
+  0010       0000          HLT <br/>
 
-  LDA Load from Adress into Accumulator
+  * LDA Load from Adress into Accumulator
 
-  0010       0001          PCI
-  0011       0001          PCO MRI
-  0100       0001          RMO MRI
-  0101       0001          ACO ACI ALS
-  0110       0001          RMO ACI PCI
-  0111       0001          CLR
+  0010       0001          PCI<br/>
+  0011       0001          PCO MRI<br/>
+  0100       0001          RMO MRI<br/>
+  0101       0001          ACO ACI ALS<br/>
+  0110       0001          RMO ACI PCI<br/>
+  0111       0001          CLR<br/>
 
   STA Store from Accumulator into Address
 
