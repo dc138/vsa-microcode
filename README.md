@@ -72,104 +72,104 @@ This repo contains a c++ program to generate the microcode for the very simple a
 
   * STA Store from Accumulator into Address
 
-    0010       0010          PCI
-    0011       0010          PCO MRI
-    0100       0010          RMO MRI
-    0101       0010          ACO RMI PCI
-    0110       0010          CLR
+    0010       0010          PCI<br/>
+    0011       0010          PCO MRI<br/>
+    0100       0010          RMO MRI<br/>
+    0101       0010          ACO RMI PCI<br/>
+    0110       0010          CLR<br/>
 
   * ADA Add to Accumulator from Address
 
-    0010       0011          PCI
-    0011       0011          PCO MRI
-    0100       0011          RMO MRI
-    0101       0011          RMO ACI FRI PCI
-    0110       0011          CLR
+    0010       0011          PCI<br/>
+    0011       0011          PCO MRI<br/>
+    0100       0011          RMO MRI<br/>
+    0101       0011          RMO ACI FRI PCI<br/>
+    0110       0011          CLR<br/>
 
   * SBA Subtract to Accumulator from Address
 
-    0010       0100          PCI
-    0011       0100          PCO MRI
-    0100       0100          RMO MRI
-    0101       0100          RMO ACI ALS FRI PCI
-    0110       0100          CLR
+    0010       0100          PCI<br/>
+    0011       0100          PCO MRI<br/>
+    0100       0100          RMO MRI<br/>
+    0101       0100          RMO ACI ALS FRI PCI<br/>
+    0110       0100          CLR<br/>
 
   * JPO Jump to Address if Overflow
 
-    0010       0101          PCI
-    0011       0101          PCO MRI
-    0100       0101          PCI
-    0101       0101          RMO PCO
-    0110       0101          CLR
+    0010       0101          PCI<br/>
+    0011       0101          PCO MRI<br/>
+    0100       0101          PCI<br/>
+    0101       0101          RMO PCO<br/>
+    0110       0101          CLR<br/>
 
   * JPZ Jump to Address if Zero
 
-    0010       0110          PCI
-    0011       0110          PCO MRI
-    0100       0110          PCI
-    0101       0110          RMO PCZ
-    0110       0110          CLR
+    0010       0110          PCI<br/>
+    0011       0110          PCO MRI<br/>
+    0100       0110          PCI<br/>
+    0101       0110          RMO PCZ<br/>
+    0110       0110          CLR<br/>
 
   * OTA Output Memory at Address
 
-    0010       0111          PCI
-    0011       0111          PCO MRI
-    0100       0111          RMO MRI
-    0101       0111          RMO OTI PCI
-    0110       0111          CLR
+    0010       0111          PCI<br/>
+    0011       0111          PCO MRI<br/>
+    0100       0111          RMO MRI<br/>
+    0101       0111          RMO OTI PCI<br/>
+    0110       0111          CLR<br/>
 
   * JMP Jump to Address
 
-    0010       1000          PCI
-    0011       1000          PCO MRI
-    0100       1000          RMO PCJ
-    0101       1000          CLR
+    0010       1000          PCI<br/>
+    0011       1000          PCO MRI<br/>
+    0100       1000          RMO PCJ<br/>
+    0101       1000          CLR<br/>
 
   * LDI Load from Imidiate into Accumulator
 
-    0010       1001          PCI
-    0011       1001          PCO MRI
-    0100       1001          ACO ACI ALS
-    0101       1001          RMO ACI PCI
-    0110       1001          CLR
+    0010       1001          PCI<br/>
+    0011       1001          PCO MRI<br/>
+    0100       1001          ACO ACI ALS<br/>
+    0101       1001          RMO ACI PCI<br/>
+    0110       1001          CLR<br/>
 
   * NOP No Operation
 
-    0010       1010          PCI
-    0011       1010          CLR
+    0010       1010          PCI<br/>
+    0011       1010          CLR<br/>
 
   * ADI Add to Accumulator from Imidiate
 
-    0010       1011          PCI
-    0010       1011          PCO MRI
-    0010       1011          RMO ACI FRI PCI
-    0010       1011          CLR
+    0010       1011          PCI<br/>
+    0010       1011          PCO MRI<br/>
+    0010       1011          RMO ACI FRI PCI<br/>
+    0010       1011          CLR<br/>
 
   * SBI Subtract to Accumulator from Imidiate
 
-    0010       1100          PCI
-    0010       1100          PCO MRI
-    0010       1100          RMO ACI ALS FRI PCI
-    0010       1100          CLR
+    0010       1100          PCI<br/>
+    0010       1100          PCO MRI<br/>
+    0010       1100          RMO ACI ALS FRI PCI<br/>
+    0010       1100          CLR<br/>
 
   * JNO Jump to Address if not Overflow
 
-    0010       1101          PCI
-    0011       1101          PCO MRI
-    0100       1101          PCI
-    0101       1101          RMO PCO PCJ
-    0110       1101          CLR
+    0010       1101          PCI<br/>
+    0011       1101          PCO MRI<br/>
+    0100       1101          PCI<br/>
+    0101       1101          RMO PCO PCJ<br/>
+    0110       1101          CLR<br/>
 
   * JNZ Jump to Address if not Zero
 
-    0010       1110          PCI
-    0011       1110          PCO MRI
-    0100       1110          PCI
-    0101       1110          RMO PCZ PCJ
-    0110       1110          CLR
+    0010       1110          PCI<br/>
+    0011       1110          PCO MRI<br/>
+    0100       1110          PCI<br/>
+    0101       1110          RMO PCZ PCJ<br/>
+    0110       1110          CLR<br/>
 
   * OTC Output Accumulator
 
-    0010       1111          ACO OTI PCI
-    0011       1111          CLR
+    0010       1111          ACO OTI PCI<br/>
+    0011       1111          CLR<br/>
 
