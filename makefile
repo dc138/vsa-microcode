@@ -12,7 +12,7 @@ SOURCE_DIR  := src/
 INCLUDE_DIR := include/
 
 TARGET   := microcode
-SRC      := $(shell find $(SOURCE_DIR) $(INCLUDE_DIR) -type f -iname "*.cpp")
+SRC      := $(shell find $(SOURCE_DIR) $(INCLUDE_DIR) -type f -iname "*.cpp" 2>/dev/null)
 OBJECTS  := $(SRC:%.cpp=$(OBJECT_DIR)/%.o)
 
 .NOTPARALLEL:
