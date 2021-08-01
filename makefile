@@ -11,7 +11,7 @@ BINARY_DIR  := $(BUILD_DIR)/bin
 SOURCE_DIR  := src/
 INCLUDE_DIR := include/
 
-TARGET   := make
+TARGET   := microcode
 SRC      := $(shell find $(SOURCE_DIR) $(INCLUDE_DIR) -type f -iname "*.cpp")
 OBJECTS  := $(SRC:%.cpp=$(OBJECT_DIR)/%.o)
 
