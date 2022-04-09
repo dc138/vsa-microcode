@@ -19,9 +19,9 @@ List of all control signals:
 
   PCO Program Counter Out
   PCI Program Counter Increment
-  PCJ Program Counter Branch
+  PCN Program Counter Branch Negate
   PCZ Program Counter Branch (if zero)
-  PCF Program Counter Branch (if overflow)
+  PCO Program Counter Branch (if overflow)
 
   MRI Memory Address Register In
   RMI Random Acess Memory In
@@ -30,6 +30,15 @@ List of all control signals:
   IRI Instruction Register In
   CLR Control Logic Microstep reset
 
+Note on branching
+=================
+
+Due to limiting the number of control signals to 16, all branching options had to
+be compacted on to three lines, PCN, PCZ & PCO. The PCN flag will negate all
+branching operations, meaning that setting this line high by itself will always
+branch. Combining this flag with the others allows for more complex behaviour, as
+one can toggle either PCZ or PCO to branch and optionally the PCN alongside them
+to invert them.
 
 List of all instructions:
 =========================
@@ -127,7 +136,7 @@ Instruction Explanation:
 
   0010       1000          PCI
   0011       1000          PCO MRI
-  0100       1000          RMO PCJ
+  0100       1000          RMO PCN
   0101       1000          CLR
 
   LDI Load from Imidiate into Accumulator
@@ -162,7 +171,7 @@ Instruction Explanation:
   0010       1101          PCI
   0011       1101          PCO MRI
   0100       1101          PCI
-  0101       1101          RMO PCO PCJ
+  0101       1101          RMO PCO PCN
   0110       1101          CLR
 
   JNZ Jump to Address if not Zero
@@ -170,7 +179,7 @@ Instruction Explanation:
   0010       1110          PCI
   0011       1110          PCO MRI
   0100       1110          PCI
-  0101       1110          RMO PCZ PCJ
+  0101       1110          RMO PCZ PCN
   0110       1110          CLR
 
   OTC Output Accumulator
