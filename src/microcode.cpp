@@ -48,145 +48,152 @@
 #define CWH(bits) ((CWI ^ (bits)) >> 8)
 #define CWL(bits) ((CWI ^ (bits)) & 0x00FF)
 
-uint8_t microcode[512];
 uint8_t microcode_low[256];
 uint8_t microcode_high[256];
 
-void set_addr(uint16_t addr, uint16_t bits) {
-  microcode[(addr*2)  ] = CWH(bits);
-  microcode[(addr*2)+1] = CWL(bits);
+uint8_t invert_nibble(uint8_t in) {
+  uint8_t b0 = (in & 0b0001) >> 0;
+  uint8_t b1 = (in & 0b0010) >> 1;
+  uint8_t b2 = (in & 0b0100) >> 2;
+  uint8_t b3 = (in & 0b1000) >> 3;
 
-  microcode_low[addr] = CWL(bits);
-  microcode_high[addr] = CWH(bits);
+  return (b0 << 3) | (b1 << 2) | (b2 << 1) | (b3 << 0);
+}
+
+void set_addr(uint8_t ins, uint8_t step, uint16_t bits) {
+  microcode_low[(invert_nibble(step) << 4) | (invert_nibble(ins) << 0)] = CWL(bits);
+  microcode_high[(ins << 4) | (step << 0)] = CWH(bits);
 }
 
 int main() {
-  std::memset((void *)microcode, 0, sizeof(uint8_t) * 512);
   std::memset((void *)microcode_low, 0, sizeof(uint8_t) * 256);
   std::memset((void *)microcode_high, 0, sizeof(uint8_t) * 256);
+
   uint8_t i = 0;
+  uint8_t j = 0;
 
   // clang-format off
   // Ensure invalid locations redirect back to a valid instruction code
 
   do {
-    set_addr(i, CLR);
-  } while (i++ < 0xFF);
+    j = 0;
+
+    do {
+      set_addr(i, j, CLR);
+    } while (j++ < 0xF);
+  } while (i++ < 0xF);
+
+  i = 0;
 
   // Common instruction fetch cycle
 
   do {
-    set_addr(0b00000000+i, PCO|MRI);
-    set_addr(0b00010000+i, RMO|IRI);
+    set_addr(i, 0b0000, PCO|MRI);
+    set_addr(i, 0b0001, RMO|IRI);
   } while (i++ < 0xF);
 
   // HLT Halt System Clock
 
-  set_addr(0b00100000, HLT);
+  set_addr(0b0000, 0b0010, HLT);
 
   // LDA Load from Adress into Accumulator
 
-  set_addr(0b00100001, PCI);
-  set_addr(0b00110001, PCO|MRI);
-  set_addr(0b01000001, RMO|MRI);
-  set_addr(0b01010001, ACO|ACI|ALS);
-  set_addr(0b01100001, RMO|ACI|PCI);
+  set_addr(0b0001, 0b0010, PCI);
+  set_addr(0b0001, 0b0011, PCO|MRI);
+  set_addr(0b0001, 0b0100, RMO|MRI);
+  set_addr(0b0001, 0b0101, ACO|ACI|ALS);
+  set_addr(0b0001, 0b0110, RMO|ACI|PCI);
 
   // STA Store from Accumulator into Address
 
-  set_addr(0b00100010, PCI);
-  set_addr(0b00110010, PCO|MRI);
-  set_addr(0b01000010, RMO|MRI);
-  set_addr(0b01010010, ACO|RMI|PCI);
+  set_addr(0b0010, 0b0010, PCI);
+  set_addr(0b0010, 0b0011, PCO|MRI);
+  set_addr(0b0010, 0b0100, RMO|MRI);
+  set_addr(0b0010, 0b0101, ACO|RMI|PCI);
   
   // ADA Add to Accumulator from Address
 
-  set_addr(0b00100011, PCI);
-  set_addr(0b00110011, PCO|MRI);
-  set_addr(0b01000011, RMO|MRI);
-  set_addr(0b01010011, RMO|ACI|FRI|PCI);
+  set_addr(0b0011, 0b0010, PCI);
+  set_addr(0b0011, 0b0011, PCO|MRI);
+  set_addr(0b0011, 0b0100, RMO|MRI);
+  set_addr(0b0011, 0b0101, RMO|ACI|FRI|PCI);
 
   // SBA Subtract to Accumulator from Address
 
-  set_addr(0b00100100, PCI);
-  set_addr(0b00110100, PCO|MRI);
-  set_addr(0b01000100, RMO|MRI);
-  set_addr(0b01010100, RMO|ACI|ALS|FRI|PCI);
+  set_addr(0b0100, 0b0010, PCI);
+  set_addr(0b0100, 0b0011, PCO|MRI);
+  set_addr(0b0100, 0b0100, RMO|MRI);
+  set_addr(0b0100, 0b0101, RMO|ACI|ALS|FRI|PCI);
 
   // JPO Jump to Address if Overflow
 
-  set_addr(0b00100101, PCI);
-  set_addr(0b00110101, PCO|MRI);
-  set_addr(0b01000101, PCI);
-  set_addr(0b01010101, RMO|PCF);
+  set_addr(0b0101, 0b0010, PCI);
+  set_addr(0b0101, 0b0011, PCO|MRI);
+  set_addr(0b0101, 0b0100, PCI);
+  set_addr(0b0101, 0b0101, RMO|PCF);
 
   // JPZ Jump to Address if Zero
 
-  set_addr(0b00100110, PCI);
-  set_addr(0b00110110, PCO|MRI);
-  set_addr(0b01000110, PCI);
-  set_addr(0b01010110, RMO|PCZ);
+  set_addr(0b0110, 0b0010, PCI);
+  set_addr(0b0110, 0b0011, PCO|MRI);
+  set_addr(0b0110, 0b0100, PCI);
+  set_addr(0b0110, 0b0101, RMO|PCZ);
 
   // OTA Output Memory at Address
 
-  set_addr(0b00100111, PCI);
-  set_addr(0b00110111, PCO|MRI);
-  set_addr(0b01000111, RMO|MRI);
-  set_addr(0b01010111, RMO|OTI|PCI);
+  set_addr(0b0111, 0b0010, PCI);
+  set_addr(0b0111, 0b0011, PCO|MRI);
+  set_addr(0b0111, 0b0100, RMO|MRI);
+  set_addr(0b0111, 0b0101, RMO|OTI|PCI);
 
   // JMP Jump to Address
 
-  set_addr(0b00101000, PCI);
-  set_addr(0b00111000, PCO|MRI);
-  set_addr(0b01001000, RMO|PCJ);
+  set_addr(0b1000, 0b0010, PCI);
+  set_addr(0b1000, 0b0011, PCO|MRI);
+  set_addr(0b1000, 0b0100, RMO|PCJ);
 
   // LDI Load from Imidiate into Accumulator
 
-  set_addr(0b00101001, PCI);
-  set_addr(0b00111001, PCO|MRI);
-  set_addr(0b01001001, ACO|ACI|ALS);
-  set_addr(0b01011001, RMO|ACI|PCI);
+  set_addr(0b1001, 0b0010, PCI);
+  set_addr(0b1001, 0b0011, PCO|MRI);
+  set_addr(0b1001, 0b0100, ACO|ACI|ALS);
+  set_addr(0b1001, 0b0101, RMO|ACI|PCI);
 
   // NOP No Operation
 
-  set_addr(0b00101010, PCI);
+  set_addr(0b1010, 0b0010, PCI);
 
   // ADI Add to Accumulator from Imidiate
 
-  set_addr(0b00101011, PCI);
-  set_addr(0b00111011, PCO|MRI);
-  set_addr(0b01001011, RMO|ACI|FRI|PCI);
+  set_addr(0b1011, 0b0010, PCI);
+  set_addr(0b1011, 0b0011, PCO|MRI);
+  set_addr(0b1011, 0b0100, RMO|ACI|FRI|PCI);
 
   // SBI Subtract to Accumulator from Imidiate
 
-  set_addr(0b00101100, PCI);
-  set_addr(0b00111100, PCO|MRI);
-  set_addr(0b01001100, RMO|ACI|ALS|FRI|PCI);
+  set_addr(0b1100, 0b0010, PCI);
+  set_addr(0b1100, 0b0011, PCO|MRI);
+  set_addr(0b1100, 0b0100, RMO|ACI|ALS|FRI|PCI);
 
   // JNO Jump to Address if not Overflow
 
-  set_addr(0b00101101, PCI);
-  set_addr(0b00111101, PCO|MRI);
-  set_addr(0b01001101, PCI);
-  set_addr(0b01011101, RMO|PCF|PCJ);
+  set_addr(0b1101, 0b0010, PCI);
+  set_addr(0b1101, 0b0011, PCO|MRI);
+  set_addr(0b1101, 0b0100, PCI);
+  set_addr(0b1101, 0b0101, RMO|PCF|PCJ);
 
   // JNZ Jump to Address if not Zero
 
-  set_addr(0b00101110, PCI);
-  set_addr(0b00111110, PCO|MRI);
-  set_addr(0b01001110, PCI);
-  set_addr(0b01011110, RMO|PCZ|PCJ);
+  set_addr(0b1110, 0b0010, PCI);
+  set_addr(0b1110, 0b0011, PCO|MRI);
+  set_addr(0b1110, 0b0100, PCI);
+  set_addr(0b1110, 0b0101, RMO|PCZ|PCJ);
 
   // OTC Output Accumulator
 
-  set_addr(0b00101111, ACO|OTI|PCI);
+  set_addr(0b1111, 0b0010, ACO|OTI|PCI);
 
   // clang-format on
-
-  std::ofstream out;
-  out.open("microcode.rom", std::ofstream::binary);
-  out.write((char *)microcode, sizeof(uint8_t) * 512);
-  out.close();
 
   std::ofstream out_low;
   out_low.open("microcode_low.rom", std::ofstream::binary);
