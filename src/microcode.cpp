@@ -61,8 +61,8 @@ uint8_t invert_nibble(uint8_t in) {
 }
 
 void set_addr(uint8_t ins, uint8_t step, uint16_t bits) {
-  microcode_low[(invert_nibble(step) << 4) | (invert_nibble(ins) << 0)] = CWL(bits);
-  microcode_high[(ins << 4) | (step << 0)] = CWH(bits);
+  microcode_low[(invert_nibble(step) << 4) | ins] = CWL(bits);
+  microcode_high[(invert_nibble(ins) << 4) | step] = CWH(bits);
 }
 
 int main() {
@@ -110,7 +110,7 @@ int main() {
   set_addr(0b0010, 0b0011, PCO|MRI);
   set_addr(0b0010, 0b0100, RMO|MRI);
   set_addr(0b0010, 0b0101, ACO|RMI|PCI);
-  
+
   // ADA Add to Accumulator from Address
 
   set_addr(0b0011, 0b0010, PCI);
