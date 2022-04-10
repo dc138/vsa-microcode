@@ -61,8 +61,8 @@ uint8_t invert_nibble(uint8_t in) {
 }
 
 void set_addr(uint8_t ins, uint8_t step, uint16_t bits) {
-  microcode_low[(invert_nibble(step) << 4) | ins] = CWL(bits);
-  microcode_high[(invert_nibble(ins) << 4) | step] = CWH(bits);
+  microcode_low[(step << 4) | ins] = CWL(bits);
+  microcode_high[(invert_nibble(ins) << 4) | invert_nibble(step)] = CWH(bits);
 }
 
 int main() {
