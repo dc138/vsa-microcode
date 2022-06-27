@@ -1,8 +1,8 @@
-MicroCode
-=========
+Very Simple Architecture Microcode
+==================================
 
-This repo contaisn the C++ program used to generate the VSA (Very Simple
-Arhitecture) microcode to be used by the processor control logic.
+This repo contaisn the C++ program used to generate the Very Simple
+Arhitecture microcode to be used by the processor control logic.
 
 List of all control signals:
 ============================
